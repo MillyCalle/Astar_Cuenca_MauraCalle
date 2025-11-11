@@ -45,6 +45,53 @@ st.markdown("""
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
     
+    /* Tarjeta de ruta mejorada */
+    .route-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        border: 2px solid #e5e7eb;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        margin: 1.5rem 0;
+    }
+    
+    .route-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .route-path {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: #f9fafb;
+        border-radius: 8px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .route-node {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+    }
+    
+    .route-arrow {
+        color: #9ca3af;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    
     .metric-card {
         background: white;
         padding: 1.5rem;
@@ -208,10 +255,27 @@ if calcular:
                 </div>
                 """, unsafe_allow_html=True)
             
-            # Ruta detallada
-            st.markdown("### 🛣️ Ruta Detallada")
-            ruta_texto = " → ".join([f"**{nodo}**" for nodo in path])
-            st.markdown(f"<div class='info-card'>{ruta_texto}</div>", unsafe_allow_html=True)
+            # Ruta detallada MEJORADA
+            st.markdown("### 🛣️ Itinerario de la Ruta")
+            
+            # Crear el HTML de la ruta con nodos individuales
+            route_nodes_html = ""
+            for i, nodo in enumerate(path):
+                route_nodes_html += f'<span class="route-node">{nodo}</span>'
+                if i < len(path) - 1:
+                    route_nodes_html += '<span class="route-arrow">→</span>'
+            
+            st.markdown(f"""
+            <div class="route-card">
+                <div class="route-title">
+                    <span>📍</span>
+                    <span>Secuencia de Puntos de Paso</span>
+                </div>
+                <div class="route-path">
+                    {route_nodes_html}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
             
             # Mapa
             st.markdown('<div class="spacer"></div>', unsafe_allow_html=True)
